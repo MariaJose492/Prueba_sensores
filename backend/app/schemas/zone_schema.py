@@ -8,5 +8,7 @@ class ZoneResponse(BaseModel):
     ubicacion: str
     estado_operativo: str
 
+    sensores_activos: int
+
     class Config:
         from_attributes = True

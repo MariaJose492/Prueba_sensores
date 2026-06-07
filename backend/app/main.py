@@ -9,6 +9,7 @@ from app.models.zone import Zone
 from app.routes.sensor_routes import router as sensor_router
 from app.routes.zone_routes import router as zone_router
 from app.routes.monitoring_routes import router as monitoring_router
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI(
@@ -16,6 +17,15 @@ app = FastAPI(
     description="API para el proyecto de Tecnimática",
     version="1.0.0"
 )
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.get("/")
 def home():
     return {"message": "Bienvenido a la API de Tecnimática"}

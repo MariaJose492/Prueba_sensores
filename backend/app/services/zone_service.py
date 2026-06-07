@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
+from sqlalchemy import func
 
 from app.models.sensor import Sensor
 from app.models.monitoring import Monitoring
@@ -11,7 +12,32 @@ class ZoneService:
     # GET ALL ZONES
     @staticmethod
     def get_all_zones(db: Session):
-        return db.query(Zone).all()
+
+        zones = (
+
+            db.query(
+
+                Zone.id,
+                Zone.nombre,
+                Zone.descripcion,
+                Zone.ubicacion,
+                Zone.estado_operativo,
+
+                func.count(Monitoring.id).label("sensores_activos")
+            )
+
+            .outerjoin(
+                Monitoring,
+                (Monitoring.zona_id == Zone.id) &
+                (Monitoring.estado_monitoreo == "activo")
+            )
+
+            .group_by(Zone.id)
+
+            .all()
+        )
+
+        return zones
 
 
     # GET ZONES BY SENSOR ID
