@@ -1,35 +1,22 @@
-import { useEffect } from "react";
-import { getZones } from "./services/zoneService";
+import { Routes, Route } from "react-router-dom";
+
+import ZonesPage from "./pages/ZonesPage";
+import ZoneDetailPage from "./pages/ZoneDetailPage";
 
 function App() {
 
-  useEffect(() => {
-
-    const fetchZones = async () => {
-
-      try {
-
-        const data = await getZones();
-
-        console.log("Zonas:", data);
-
-      } catch (error) {
-
-        console.error("Error conectando con backend:", error);
-
-      }
-
-    };
-
-    fetchZones();
-
-  }, []);
-
   return (
-    <div>
-      <h1>Frontend funcionando</h1>
-    </div>
+
+    <Routes>
+
+      <Route path="/" element={<ZonesPage />} />
+
+      <Route path="/zones/:id" element={<ZoneDetailPage />} />
+
+    </Routes>
+
   );
+
 }
 
 export default App;
