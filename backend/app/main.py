@@ -1,7 +1,14 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
+from sqlalchemy.orm import Session
 
-from app.database import engine
-from sqlalchemy import text
+from app.dependencies import get_db
+
+from app.models.sensor import Sensor
+from app.models.monitoring import Monitoring
+from app.models.zone import Zone
+from app.routes.sensor_routes import router as sensor_router
+from app.routes.zone_routes import router as zone_router
+from app.routes.monitoring_routes import router as monitoring_router
 
 
 app = FastAPI(
@@ -9,24 +16,13 @@ app = FastAPI(
     description="API para el proyecto de Tecnimática",
     version="1.0.0"
 )
-
 @app.get("/")
 def home():
     return {"message": "Bienvenido a la API de Tecnimática"}
 
+app.include_router(sensor_router)
+app.include_router(zone_router)
+app.include_router(monitoring_router)
 
-# Prueba BD
-# @app.get("/test-db")
-# def test_db():
 
-#     with engine.connect() as connection:
 
-#         result = connection.execute(
-#             text("SELECT * FROM monitorings")
-#         )
-#         sensores = []
-
-#         for row in result:
-#             sensores.append(dict(row._mapping))
-
-#         return sensores
