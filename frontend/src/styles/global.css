@@ -32,3 +32,21 @@ h1 {
 .zone-card:hover {
     transform: translateY(-5px);
 }
+
+.sensor-list {
+    display: grid;
+    gap: 20px;
+}
+
+.sensor-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-left: 6px solid #4caf50;
+}
+
+.sensor-card.alert {
+    border-left: 6px solid red;
+    background-color: #fff5f5;
+}
