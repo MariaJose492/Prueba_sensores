@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from sqlalchemy import func
+from random import randint
 
 from app.models.sensor import Sensor
 from app.models.monitoring import Monitoring
@@ -33,7 +34,6 @@ class ZoneService:
             )
 
             .group_by(Zone.id)
-
             .all()
         )
 
@@ -50,21 +50,33 @@ class ZoneService:
     @staticmethod
     def get_sensors_by_zone(zone_id: int, db: Session):
 
-        zone = ZoneService.get_zone_by_id(zone_id, db)
-
+        zone = (db.query(Zone).filter(Zone.id == zone_id).first())
         if not zone:
+
             raise HTTPException(
                 status_code=404,
                 detail=f"Zona con id {zone_id} no encontrada"
             )
 
-        return (
-            db.query(Sensor)
-            .join(Monitoring)
-            .filter(
-                Monitoring.zona_id == zone_id,
-                Monitoring.estado_monitoreo == "activo"
-            )
-            .distinct()
-            .all()
-        )
+        monitorings = (db.query(Monitoring).filter(Monitoring.zona_id == zone_id).all())
+
+        result = []
+
+        for monitoring in monitorings:
+
+            # Simulación de lectura actual del sensor (en un caso real, se obtendría de la base de datos o del sensor en tiempo real)
+            current_value = randint(1, 110)
+            result.append({
+
+                "monitoring_id": monitoring.id,
+                "sensor_id": monitoring.sensor.id,
+                "sensor_nombre": monitoring.sensor.nombre,
+                "sensor_tipo": monitoring.sensor.tipo,
+                "tipo_lectura": monitoring.tipo_lectura,
+                "valor_umbral": monitoring.valor_umbral,
+                "estado_monitoreo": monitoring.estado_monitoreo,
+                "valor_actual": current_value,
+                "supera_umbral": current_value > monitoring.valor_umbral
+            })
+
+        return result
