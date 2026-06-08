@@ -44,7 +44,17 @@ function ZoneDetailPage() {
                         <p><strong>Lectura:</strong> {sensor.tipo_lectura}</p>
                         <p><strong>Umbral:</strong> {sensor.valor_umbral}</p>
                         <p><strong>Valor actual:</strong> {sensor.valor_actual}</p>
-                        <p><strong>Estado:</strong>{" "}{sensor.estado_monitoreo}</p> </div>
+                        <p>Estado:<span
+                            className={
+                                sensor.estado_monitoreo === "activo"
+                                    ? "status-active"
+                                    : "status-paused"
+                            }
+                        >
+
+                            {sensor.estado_monitoreo}
+
+                        </span></p> </div>
 
                 ))}
             </div>

@@ -1,36 +1,145 @@
+:root {
+    --bg: #eef3f9;
+    --surface: #ffffff;
+    --text: #102033;
+    --muted: #5d6b7b;
+    --primary: #2457ff;
+    --primary-dark: #183ec0;
+    --border: rgba(16, 32, 51, 0.08);
+    --shadow: 0 16px 32px rgba(16, 32, 51, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #f5f7fa;
+    color: var(--text);
+    background:
+        radial-gradient(circle at top left, rgba(36, 87, 255, 0.12), transparent 30%),
+        linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+    min-height: 100vh;
+}
+
+a {
+    color: inherit;
 }
 
 .container {
-    padding: 30px;
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 32px 0 56px;
 }
 
 h1 {
-    margin-bottom: 30px;
+    margin: 0 0 24px;
+    font-size: clamp(2rem, 3vw, 3rem);
+    letter-spacing: -0.03em;
 }
 
 .zones-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
 }
 
 .zone-card {
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 160px;
+    background-color: var(--surface);
+    border-radius: 18px;
+    padding: 22px;
     text-decoration: none;
-    color: black;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    color: var(--text);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+}
 
-    transition: 0.2s;
+.zone-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), #0f766e);
+    pointer-events: none;
+}
+
+.zone-card > * {
+    position: relative;
+    z-index: 1;
 }
 
 .zone-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(16, 32, 51, 0.12);
+}
+
+.zone-card h2 {
+    margin: 6px 0 12px;
+    font-size: 1.25rem;
+}
+
+.zone-card p {
+    margin: 0 0 10px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.zone-card p strong {
+    color: var(--text);
+}
+
+.navigation-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 28px 0 0;
+    justify-content: center;
+}
+
+.navigation-buttons a {
+    text-decoration: none;
+}
+
+.navigation-buttons button {
+    min-height: 46px;
+    padding: 0 18px;
+    border: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    box-shadow: 0 10px 22px rgba(36, 87, 255, 0.24);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.navigation-buttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(36, 87, 255, 0.28);
+}
+
+.navigation-buttons a:nth-child(2) button {
+    background: #0f766e;
+}
+
+.navigation-buttons a:nth-child(3) button {
+    background: #334155;
+}
+
+.sensor-list {
+    display: grid;
+    gap: 20px;
 }
 
 .sensor-list {
@@ -83,4 +192,64 @@ button {
 .error-message {
     color: red;
     font-weight: bold;
+}
+
+.status-active {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.status-paused {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.sensor-card {
+    margin-top: 20px;
+    border-radius: 12px;
+    padding: 16px;
+    transition: transform 0.2s ease;
+}
+
+.sensor-card:hover {
+    transform: scale(1.03);
+}
+
+/* ACTIVO */
+.sensor-card.activo {
+    background-color: #2e7d32;
+}
+
+/* PAUSADO */
+.sensor-card.pausado {
+    background-color: #f9a825;
+    color: black;
+}
+
+/* INACTIVO */
+.sensor-card.inactivo {
+    background-color: #c62828;
+}
+
+@media (max-width: 640px) {
+    .container {
+        width: min(100% - 20px, 1180px);
+        padding-top: 20px;
+    }
+
+    .navigation-buttons {
+        flex-direction: column;
+    }
+
+    .navigation-buttons button {
+        width: 100%;
+    }
 }
