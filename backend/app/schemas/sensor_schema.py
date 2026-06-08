@@ -8,6 +8,7 @@ class SensorResponse(BaseModel):
     tipo: str
     fabricante: str
     fecha_fabricacion: date
+    estado: str
 
     class Config:
         from_attributes = True
