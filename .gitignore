@@ -13,7 +13,7 @@ backend/__pycache__/
 # =========================
 # Frontend (React + Vite)
 # =========================
-
+frontend/.env
 node_modules/
 dist/
 dist-ssr/
