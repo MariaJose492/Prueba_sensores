@@ -50,3 +50,37 @@ h1 {
     border-left: 6px solid red;
     background-color: #fff5f5;
 }
+
+.form-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input, select, button {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+button {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.success-message {
+    color: green;
+    font-weight: bold;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+}
